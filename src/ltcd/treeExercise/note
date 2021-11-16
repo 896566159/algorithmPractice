@@ -1,0 +1,27 @@
+https://leetcode-cn.com/problems/binary-tree-inorder-traversal/solution/die-dai-fa-by-jason-2/
+
+preorderTraversal
+栈S;
+p= root;
+while(p || S不空){
+    while(p){
+        访问p
+        p的右子树入栈
+        p = p的左子树
+    }
+    p = s.pop()出栈
+}
+
+
+inorderTraversal
+栈S;
+p= root;
+while(p || S不空){
+    while(p){
+        p入S;
+        p = p的左子树;
+    }
+    p = S.top 出栈;
+    访问p;
+    p = p的右子树;
+}
