@@ -1,19 +1,28 @@
 package ltcd.treeExercise;
 
+import ltcd.treeExercise.TreeNode;
+
 public class _124_二叉树中的最大路径和 {
 
+    int sum = Integer.MIN_VALUE;
+
     public int maxPathSum(TreeNode root) {
+
+        dfs(root);
+        return sum;
+    }
+
+    private int dfs(TreeNode root) {
         if (root == null) {
             return 0;
         }
 
-        int mid = root.val;
-        int left = maxPathSum(root.left);
-        int right = maxPathSum(root.right);
+        int leftValue = Math.max(dfs(root.left), 0);
+        int rightValue = Math.max(dfs(root.right), 0);
 
+        sum = Math.max(sum, root.val + leftValue + rightValue);
 
-
-        return ;
+        return root.val + Math.max(leftValue, rightValue);
     }
 
 }

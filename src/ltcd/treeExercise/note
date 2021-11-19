@@ -1,27 +1,98 @@
 https://leetcode-cn.com/problems/binary-tree-inorder-traversal/solution/die-dai-fa-by-jason-2/
 
+树的遍历
 preorderTraversal
-栈S;
-p= root;
-while(p || S不空){
-    while(p){
-        访问p
-        p的右子树入栈
-        p = p的左子树
+    栈S;
+    p= root;
+    while(p || S不空){
+        while(p){
+            访问p
+            p的右子树入栈
+            p = p的左子树
+        }
+        p = s.pop()出栈
     }
-    p = s.pop()出栈
-}
-
 
 inorderTraversal
-栈S;
-p= root;
-while(p || S不空){
-    while(p){
-        p入S;
-        p = p的左子树;
+    栈S;
+    p= root;
+    while(p || S不空){
+        while(p){
+            p入S;
+            p = p的左子树;
+        }
+        p = S.top 出栈;
+        访问p;
+        p = p的右子树;
     }
-    p = S.top 出栈;
-    访问p;
-    p = p的右子树;
-}
+
+
+
+
+数递归
+563 二叉树的坡度
+606 根据二叉树创建字符串
+617 合并二叉树
+669 修剪二叉树
+783 二叉搜索树节点最小距离
+
+树的路径问题
+    257 二叉树的所有路径
+    112 路径总和
+    113 路径总和II
+    124 二叉树中的最大路径和
+    543 二叉树的直径
+    687 最长同值路径
+    988 从业节点开始的最小字符串
+    面试题04.12 求和路径
+    129 求根节点到叶节点数字之和
+
+    路径和相关的套路：
+    一般路径：
+    List<String> res = new LinkedList<>();//所有路径
+    String path = new String();//递归时记录递归节点的路径
+    private void dfs(TreeNode root, String path) {
+        if (root == null) return;
+
+        if (root.left == null & root.right == null) {
+            res.add(path + root.val);
+            return;
+        }
+
+        dfs(root.left, path);//继续递归
+        dfs(root.right, path);
+    }
+
+    # **给定和的路径：**
+    List<List<Integer>> res = new LinkedList<>();
+    Deque<Integer> path = new LinkedList<>();
+
+    private void dfs(TreeNode root, int targetSum, List<List<Integer>> res, Deque<Integer> path) {
+        if (root == null)  return;
+
+        path.addLast(root.val);//遍历到任何一个节点，将其加入路径中
+        targetSum -= root.val;//对这个
+
+        if (root.left == null && root.right == null &&  targetSum - root.val == 0)  res.add(new LinkedList<>(path));
+
+        dfs(root.left, targetSum, res, path);
+        dfs(root.right, targetSum, res, path);
+
+        path.pollLast();//这个是遍历到一个路径的最后一个叶子结点，如果需要回溯的话，将其删掉，回到该叶子结点的上一层。是否需要删除看情况
+    }
+
+    路径求和：
+    int ans = 0;
+
+    private int dfs(TreeNode root) {
+        if (root == null)  return 0;
+
+        int leftPath = root.left == null ? 0 : dfs(root.left) + 1;
+        int rightPath = root.right == null ? 0 : dfs(root.right) + 1;
+
+        ans = Math.max(ans, leftPath + rightPath); //将得到的最优解与当前节点比较，更新最优解
+
+        return Math.max(leftPath, rightPath); //因为是路径，只能返回左右字数中最大（最优）的那个子树给父节点
+    }
+
+

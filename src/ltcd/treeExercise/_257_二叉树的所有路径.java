@@ -14,7 +14,6 @@ public class _257_二叉树的所有路径 {
         String path = new String();
 
         dfs(root, res, path);
-
         return res;
     }
 
