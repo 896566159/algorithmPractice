@@ -1,4 +1,4 @@
-package ltcd.treeExercise;
+package ltcd.treeExercise.difficult;
 
 public class _606_根据二叉树创建字符串 {
 

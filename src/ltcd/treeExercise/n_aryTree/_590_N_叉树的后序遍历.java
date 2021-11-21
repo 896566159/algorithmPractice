@@ -1,32 +1,11 @@
-package ltcd.treeExercise;
+package ltcd.treeExercise.n_aryTree;
+
+import ltcd.treeExercise.n_aryTree.Node;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 public class _590_N_叉树的后序遍历 {
-
-    public List<Integer> postorder(Node root) {
-        List<Integer> ans = new LinkedList<>();
-        Stack<Node> stack = new Stack<>();
-        Node p = root;
-
-        while (p != null || !stack.isEmpty()) {
-
-
-            while (p != null) {
-                stack.push(p);
-                List<Node> children = p.children;
-
-            }
-
-            p = stack.pop();
-            ans.add(p.val);
-
-            p =
-        }
-    }
-
 
     LinkedList<Integer> res = new LinkedList<>();
 

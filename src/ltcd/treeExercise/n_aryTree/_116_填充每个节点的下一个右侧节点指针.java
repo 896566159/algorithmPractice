@@ -1,4 +1,6 @@
-package ltcd.treeExercise;
+package ltcd.treeExercise.n_aryTree;
+
+import ltcd.treeExercise.n_aryTree.Node;
 
 import java.util.LinkedList;
 import java.util.Queue;

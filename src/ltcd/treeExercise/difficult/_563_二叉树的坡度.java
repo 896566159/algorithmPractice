@@ -1,4 +1,4 @@
-package ltcd.treeExercise;
+package ltcd.treeExercise.difficult;
 
 public class _563_二叉树的坡度 {
 

@@ -1,4 +1,4 @@
-package ltcd.treeExercise;
+package ltcd.treeExercise.n_aryTree;
 
 import java.util.LinkedList;
 import java.util.List;

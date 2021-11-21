@@ -1,4 +1,4 @@
-package ltcd.treeExercise;
+package ltcd.treeExercise.difficult;
 
 import java.util.Deque;
 import java.util.LinkedList;

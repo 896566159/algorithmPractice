@@ -1,4 +1,4 @@
-package ltcd.treeExercise;
+package ltcd.treeExercise.difficult;
 
 public class _687_最长同值路径 {
 

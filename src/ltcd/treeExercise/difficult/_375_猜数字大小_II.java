@@ -1,4 +1,4 @@
-package ltcd.treeExercise;
+package ltcd.treeExercise.difficult;
 
 public class _375_猜数字大小_II {
 

@@ -1,6 +1,4 @@
-package ltcd.treeExercise;
-
-import ltcd.treeExercise.TreeNode;
+package ltcd.treeExercise.difficult;
 
 public class _124_二叉树中的最大路径和 {
 

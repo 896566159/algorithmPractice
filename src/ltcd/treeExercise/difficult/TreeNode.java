@@ -1,2 +1,11 @@
-package ltcd.treeExercise.difficult;public class TreeNode {
+package ltcd.treeExercise.difficult;
+
+public class TreeNode extends ltcd.treeExercise.TreeNode {
+    TreeNode left;
+    TreeNode right;
+    int val;
+
+    public TreeNode(int val) {
+        super(val);
+    }
 }
