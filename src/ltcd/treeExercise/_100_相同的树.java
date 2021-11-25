@@ -3,7 +3,7 @@ package ltcd.treeExercise;
 public class _100_相同的树 {
 
     public boolean isSameTree(TreeNode p, TreeNode q) {
-        if (p == null & q == null) {
+        if (p == null && q == null) {
             return true;
         }
 

@@ -11,7 +11,7 @@ public class _110_平衡二叉树 {
             return false;
         }
 
-        return isBalanced(root.left) & isBalanced(root.right);
+        return isBalanced(root.left) && isBalanced(root.right);
     }
 
     private int getHeight(TreeNode node) {

@@ -71,15 +71,4 @@ public class _94_二叉树的中序遍历 {
         return l;
     }
 
-    public static void main(String[] args) {
-        TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(3);
-        root.left.right = new TreeNode(4);
-        root.right.left = new TreeNode(7);
-        root.right.right = new TreeNode(8);
-
-        System.out.println(inorderTraversal2(root));
-    }
-
 }

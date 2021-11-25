@@ -13,6 +13,7 @@ public class _590_N_叉树的后序遍历 {
         if (root == null) {
             return new LinkedList<>();
         }
+        dfs(root);
         return res;
     }
 
@@ -22,7 +23,7 @@ public class _590_N_叉树的后序遍历 {
         }
 
         List<Node> children = root.children;
-        for (int i = children.size() - 1; i >= 0; i++) {
+        for (int i = 0; i < children.size(); i++) {
             dfs(children.get(i));
         }
 
