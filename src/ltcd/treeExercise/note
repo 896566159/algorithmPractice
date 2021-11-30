@@ -27,9 +27,13 @@ inorderTraversal
     }
 
 
-
-
-数递归
+树递归---树的递归过程中分为：单纯遍历和遍历同时改变树的结构
+    - 单纯遍历：
+            dfs(root.left);
+            dfs(root.right);
+    - 改变树的结构：
+            root.left = dfs(root.left);
+            root.right = dfs(root.right);
 563 二叉树的坡度
 606 根据二叉树创建字符串
 617 合并二叉树
@@ -78,6 +82,7 @@ inorderTraversal
         dfs(root.left, targetSum, res, path);
         dfs(root.right, targetSum, res, path);
 
+        //回溯
         path.pollLast();//这个是遍历到一个路径的最后一个叶子结点，如果需要回溯的话，将其删掉，回到该叶子结点的上一层。是否需要删除看情况
     }
 
@@ -96,3 +101,34 @@ inorderTraversal
     }
 
 
+树的序列化与反序列化----对比两个树是否相等、检查是否为子树
+二叉搜索树可以进行优化：https://leetcode-cn.com/problems/serialize-and-deserialize-bst/solution/xu-lie-hua-he-fan-xu-lie-hua-er-cha-sou-suo-shu-2/
+    public String serialize(TreeNode root) {
+        if (root == null) {
+            return "#";
+        }
+
+        String serialize = root.val + "," + serialize(root.left) + "," + serialize(root.right);
+        list.add(serialize);
+
+        return serialize;
+    }
+
+    public TreeNode deserialize(String data) {
+            if (data == null || data.length() == 0) {
+                return null;
+            }
+            String[] strings = data.split(",");
+            for (int i = 0; i < strings.length; i++) {
+                nodes.offer(strings[i]);
+            }
+            return recur(nodes);
+    }
+    private TreeNode recur(Deque<String> nodes) {
+        String s = nodes.pollFirst();
+        if (s.equals("#")) return null;
+        TreeNode root = new TreeNode(Integer.parseInt(s));
+        root.left = recur(nodes);
+        root.right = recur(nodes);
+        return root;
+    }
