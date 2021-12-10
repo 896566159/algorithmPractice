@@ -1,0 +1,12 @@
+排序：
+                稳定性     类别
+冒泡Bubble        √       比较排序
+选择Selection     ×       比较排序
+插入Insertion     √       比较排序
+归并Merge         √       比较排序
+快速Quick         ×       比较排序
+希尔Shell         ×       比较排序
+堆Heap            ×       比较排序
+计数Counting      √       非比较排序
+桶Bucket          √       非比较排序
+基数Radix排序      √       非比较排序

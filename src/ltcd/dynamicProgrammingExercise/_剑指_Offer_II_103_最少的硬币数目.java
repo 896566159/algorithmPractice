@@ -20,9 +20,9 @@ public class _剑指_Offer_II_103_最少的硬币数目 {
             dp[i] = set.contains(i) ? 1 : i;
         }
 
-        for (int i = 0; i < dp.length; i++) {
-            dp[]
-        }
+//        for (int i = 0; i < dp.length; i++) {
+//            dp[]
+//        }
 
         return dp[amount];
     }
