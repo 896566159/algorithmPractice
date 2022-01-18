@@ -11,18 +11,6 @@ public class _剑指_Offer_II_103_最少的硬币数目 {
         }
 
         int[] dp = new int[amount + 1];
-        Set<Integer> set = new HashSet<>();
-        for (int i = 0; i < coins.length; i++) {
-            set.add(coins[i]);
-        }
-
-        for (int i = 0; i < dp.length; i++) {
-            dp[i] = set.contains(i) ? 1 : i;
-        }
-
-//        for (int i = 0; i < dp.length; i++) {
-//            dp[]
-//        }
 
         return dp[amount];
     }
