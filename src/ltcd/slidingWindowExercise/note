@@ -1,0 +1,15 @@
+滑动窗口模板：
+
+int left = 0, right = 0;
+
+while (right < s.size()) {
+    // 增⼤窗⼝
+    window.add(s[right]);
+    right++;
+
+    // 缩⼩窗⼝
+    while (window needs shrink) {
+        window.remove(s[left]);
+        left++;
+    }
+ }

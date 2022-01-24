@@ -32,8 +32,4 @@ public class _213_打家劫舍_II {
 
         return dp[end];
     }
-
-    public static void main(String[] args) {
-        System.out.println(new _213_打家劫舍_II().rob(new int[]{1,2,3,1}));;
-    }
 }
