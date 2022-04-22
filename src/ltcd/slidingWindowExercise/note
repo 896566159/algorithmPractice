@@ -13,3 +13,19 @@ while (right < s.size()) {
         left++;
     }
  }
+
+
+int left = 0;
+int right = 0;
+while (right < s.size()) {
+    //	处理值
+
+    while() { //判断符合条件
+        // 最小在这里求
+
+        // 左窗口移动
+        left++;
+    }
+
+    // 最大在这里求
+}
