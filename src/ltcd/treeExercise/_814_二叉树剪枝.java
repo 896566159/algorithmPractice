@@ -16,11 +16,6 @@ public class _814_二叉树剪枝 {
         return root;
     }
 
-
-
-
-
-
     public TreeNode pruneTree1(TreeNode root) {
         if (root == null) {
             return null;

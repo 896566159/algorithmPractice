@@ -16,6 +16,9 @@ public class HJ14_字符串排序 {
             }
         }
 
+        Set<String> strings = new HashSet<>();
+        Iterator<String> iterator1 = strings.iterator();
+
         Iterator<Map.Entry<String, Integer>> iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, Integer> next = iterator.next();

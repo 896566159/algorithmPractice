@@ -7,6 +7,9 @@ package ltcd.sort;
  *     ✓ 直到最终只剩下1个有序序列
  */
 
+/**
+ * 在合并阶段使用了辅助数组
+ */
 public class MergeSort {
 
     public void MergeSort(int[] nums) {

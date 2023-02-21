@@ -4,7 +4,7 @@ public class _713_乘积小于_K_的子数组 {
 
     public int numSubarrayProductLessThanK(int[] nums, int k) {
         int left = 0;
-        int right = 1;
+        int right = 0;
         int count = 0;
         int len = nums.length;
         long multiplication = 1;
