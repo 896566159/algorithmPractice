@@ -1,4 +1,4 @@
-package ltcd;
+package ltcd.stringExercise;
 
 import java.util.HashMap;
 import java.util.HashSet;
