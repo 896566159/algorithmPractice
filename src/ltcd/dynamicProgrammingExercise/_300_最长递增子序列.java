@@ -39,6 +39,7 @@ public class _300_最长递增子序列 {
                 tail[left] = nums[i];
             }
         }
+        return 0;
     }
 
     // 时间复杂度 O(n方)
