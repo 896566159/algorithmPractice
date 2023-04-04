@@ -1,0 +1,100 @@
+数组的访问：
+    void traverse(int[] arr) {
+        for(int i = 0; i < arr.length; i++) {
+            //visit arr[i]
+        }
+    }
+
+链表的遍历：
+    /*ListNode constructure*/
+    class ListNode {
+        int val;
+        ListNode next;
+    }
+
+    void traverse(ListNode head) {
+        for(ListNode p = head; p != null; p = p.next;){
+            //visit every node
+        }
+    }
+
+    void traverse(ListNode head) {
+        //every node
+        traverse(head.next)
+    }
+
+二叉树的遍历
+    /* 基本的二叉树节点 */
+    class TreeNode {
+        int val;
+        TreeNode left, right;
+    }
+
+    void traverse(TreeNode root) {
+        // 前序遍历preorderTraversal
+        traverse(root.left);
+        // 中序遍历inorderTraversal
+        traverse(root.right);
+        // 后序遍历postorderTraversal
+    }
+
+    /* 基本的N叉树节点 */
+    class TreeNode {
+    int val;
+    TreeNode[] children;
+    }
+
+    void traverse(TreeNode root) {
+        for (TreeNode child : root.children) {
+            traverse(child)
+        }
+    }
+
+建议先刷树专题的题目，【二叉树】相关问题几乎用【递归】解决，而后面的【动态规划】与【回溯】等思想几乎也都是使用递归的方式实现。
+    【动态规划】和【回溯】相当于是【N叉树的（前中后序）遍历】
+
+
+
+
+动态规划 - Dynamic Programming
+链表 - Linked List
+递归 - Recursion
+二叉树 - Binary Tree
+二分法 - Binary Search
+深度优先搜索 -Depth First Search (DFS)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
