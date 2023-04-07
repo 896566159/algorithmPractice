@@ -34,8 +34,6 @@ public class _452_用最少数量的箭引爆气球 {
             }
         }
 
-
-
         return ans;
     }
 
