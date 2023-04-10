@@ -75,9 +75,11 @@ public class _最大化控制资源成本_ {
         int tmp = 0;
 
         for (int i = 0; i < tasks.length; i++) {
+            // 先下车
             while (!priorityQueue.isEmpty()) {
                 Integer[] peek = priorityQueue.peek();
 
+                // 下车
                 if (peek[0] <= tasks[i][0]) {
                     Integer[] poll = priorityQueue.poll();
                     tmp -= poll[1];
@@ -86,6 +88,7 @@ public class _最大化控制资源成本_ {
                 }
             }
 
+            // 上车
             priorityQueue.offer(new Integer[] {tasks[i][1], tasks[i][2]});
             tmp += tasks[i][2];
 
