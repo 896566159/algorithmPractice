@@ -4,6 +4,9 @@ import java.util.*;
 
 public class _叠积木_ {
 
+    static Map<Integer, Integer> bricks = new TreeMap<>();
+    static boolean[] used;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
@@ -13,7 +16,8 @@ public class _叠积木_ {
 
         int sum = 0;
         int maxLen = 0;
-        Map<Integer, Integer> bricks = new TreeMap<>();
+        used = new boolean[length];
+
         for (int i = 0; i < split.length; i++) {
             int brick = Integer.parseInt(split[i]);
             arr[i] = brick;
@@ -32,37 +36,33 @@ public class _叠积木_ {
                 continue;
             }
 
-
             // 从长度最长的砖开始使用
-            for (int i = length - 1; i >= 0; i--) {
-                int firstBrick = arr[i];
+            for (int i = 0; i <= length; i++) {
+                // 已经找到默写砖块
+                if (dfs(len, arr[i], i, arr)) {
 
-                // 看map中是否有另一块砖和当前这块砖能够拼接使得长度为 len
-                if (bricks.containsKey(len - firstBrick) && bricks.get(len - firstBrick) > 0) {
-                    bricks.put(firstBrick, bricks.get(firstBrick) - 1);
-                    bricks.put(len - firstBrick, bricks.get(len - firstBrick) - 1);
-                    break;
-                }
-
-                // 上面的两块砖的组合不存在，说明需要使用至少三块以上的砖头
-                for (int j = 0; j < length - i; j++) {
-                    int secondBrick = arr[j];
-                    firstBrick += secondBrick;
-
-                    // 已经长度已经超出了目标墙的长度
-                    if (firstBrick > len) {
-                        break;
-                    }
-
-                    if (bricks.containsKey(len - firstBrick) && bricks.get(len - firstBrick) > 0) {
-                        bricks.put(firstBrick, bricks.get(firstBrick) - 1);
-                        bricks.put(len - firstBrick, bricks.get(len - firstBrick) - 1);
-                        break;
-                    }
                 }
             }
         }
 
+    }
+
+    private static boolean dfs(int targetLen, int curLen, int index, int[] arr) {
+        // 看map中是否有另一块砖和当前这块砖能够拼接使得长度为 len
+        if (bricks.containsKey(targetLen - curLen) && bricks.get(targetLen - curLen) > 0) {
+            bricks.put(curLen, bricks.get(curLen) - 1);
+            bricks.put(targetLen - curLen, bricks.get(targetLen - curLen) - 1);
+            return true;
+        }
+
+        // 从下一块转开始
+        for (int i = index + 1; i < arr.length; i++) {
+            if (dfs(targetLen, curLen + arr[i], i, arr)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
