@@ -11,6 +11,7 @@ public class _354_俄罗斯套娃信封问题 {
 
     public int maxEnvelopes(int[][] envelopes) {
 
+        // 先按照信封的宽度进行升序排序，宽度相等的情况下，按照长度进行升序排序
         Arrays.sort(envelopes, (a, b) -> {
             return a[0] == b[0] ? b[1] - a[1] : a[0] - b[0];
         });
@@ -20,12 +21,10 @@ public class _354_俄罗斯套娃信封问题 {
         int max = 0;
 
         for (int i = 1; i < envelopes.length; i++) {
-            // 如果已经遍历过和当前信封长度相同的信封，则到 envelopes[i] 和 到envelopes[i - 1]能够套娃的信封数量是相同的
-            if (envelopes[i][0] == envelopes[i - 1][0]) {
+            if (envelopes[i - 1][1] == envelopes[i][1]) {
                 dp[i] = dp[i - 1];
                 continue;
             }
-
 
             int pre = 0;
 

@@ -1,59 +1,42 @@
 package ltcd.stackExercise;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Stack;
+
 public class _84_柱状图中最大的矩形 {
 
     public static void main(String[] args) {
         _84_柱状图中最大的矩形 v = new _84_柱状图中最大的矩形();
-        System.out.println(v.largestRectangleArea(new int[]{2, 1, 1, 2, 5, 6, 2, 3}));
+//        System.out.println(v.largestRectangleArea(new int[]{2, 1, 5, 6, 2, 3}));
+        System.out.println(v.largestRectangleArea(new int[]{1,2,2}));
     }
 
     public int largestRectangleArea(int[] heights) {
-        int ans = 0;
-        int length = heights.length;
-        int[] preMax = new int[length];
-        int[] sufMax = new int[length];
+        // 为了方便计算，在元素组的首位都添加一个 0
+        int[] copy = new int[heights.length + 2];
+//        for (int i = 0; i < heights.length; i++) {
+//            copy[i + 1] = heights[i];
+//        }
+        System.arraycopy(heights, 0, copy, 1, heights.length);
+        Deque<Integer> stack =  new ArrayDeque<>();
+        int area = 0;
 
-        int minIndex = 0;
-        preMax[0] = 0;
-        for (int i = 1; i < length; i++) {
-            // 前一个和当前比较，如果前一个小于当前，则就是 i - 1
-            if (heights[i - 1] < heights[i]) {
-                preMax[i] = i - 1;
-            } else if (heights[i - 1] > heights[i]){
-                // 如果前一个元素大于当前元素，则用最小的和当前比
-                if (heights[i] > heights[minIndex]) {
-                    preMax[i] = minIndex;
-                } else {
-                    // 遍历到此，当前元素是最小的元素，前面没有比当前元素更小的元素
-                    preMax[i] = i;
-                    minIndex = i;
-                }
-            } else {
-                preMax[i] = preMax[i - 1];
+        for (int i = 0; i < copy.length; i++) {
+            // 对栈中柱体来说，占中的下一个柱体就是其 [左边第一个比该柱体低的柱体]
+            // 若当前柱体 i 的高度小于栈顶柱体的高度，说明 i 是栈顶柱体的 [右边第一个小于栈顶柱体的柱体]
+            // 因此就确定了栈顶柱体 左边、右边第一个 比栈顶柱体低的柱体，即确定了 左右宽度。乘上栈顶柱体的高度即可求出以栈顶元素为高度围成的矩形面积
+            while (!stack.isEmpty() && copy[stack.peek()] > copy[i]) {
+                // 计算
+                int height = copy[stack.pop()];
+                area = Math.max(area, height * (i - stack.peek() - 1));
             }
+
+            // 入栈
+            stack.push(i);
         }
 
-        minIndex = length - 1;
-        sufMax[length - 1] = minIndex;
-        for (int i = length - 2; i >= 0; i--) {
-            // 后一个和最小的相比，取大的那个
-            if (heights[sufMax[minIndex]] > heights[i + 1]) {
-                minIndex = i + 1;
-                sufMax[i] = minIndex;
-            } else {
-                sufMax[i] = minIndex;
-            }
-        }
-
-        for (int i = 0; i < length; i++) {
-            int curHeight = heights[i];
-            int left = preMax[i];
-            int right = sufMax[i];
-            int area = (right - left - 1) * curHeight;
-            ans = Math.max(ans, area);
-        }
-
-        return ans;
+        return area;
     }
 
     // 暴力解法
