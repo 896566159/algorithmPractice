@@ -15,6 +15,7 @@ public class _1096_花括号展开II {
         ii.braceExpansionII(new String("{a,b}c{d,e}f"));
     }
 
+    //n{g,{u,o}}{a,{x,ia,o},w}
     public List<String> braceExpansionII(String expression) {
         List<String> res = dfs2(expression, 0, expression.length() - 1);
         Set<String> set = new TreeSet<>();
