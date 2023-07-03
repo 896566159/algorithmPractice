@@ -6,7 +6,7 @@ public class _233_数字1的个数 {
 
     public static void main(String[] args) {
         _233_数字1的个数 v = new _233_数字1的个数();
-        System.out.println(v.countDigitOne(13));
+        System.out.println(v.countDigitOne(50));
     }
 
     int[][] memo;
@@ -36,7 +36,7 @@ public class _233_数字1的个数 {
         int count = 0;
         int up = isLimit ? chars[index] - '0' : 9;
         for (int d = 0; d <= up; d++) {
-            count += f(index + 1, oneCnt + (d == 1 ? 1 : 0), (isLimit && d == up));
+            count += f(index + 1, oneCnt + (d == 4? 1 : 0), (isLimit && d == up));
         }
 
         // 记忆化：记录该状态的结果
