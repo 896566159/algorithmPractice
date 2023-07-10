@@ -39,7 +39,7 @@ public class _最多获得的短信条数_ {
         Scanner scanner = new Scanner(System.in);
         int n = Integer.parseInt(scanner.nextLine());
         String[] split = scanner.nextLine().split(" ");
-        int[] dp = new int[n + 2];
+        int[] dp = new int[n + 1];
 
         int choices = split.length;
         int[] p = new int[choices];
@@ -58,7 +58,7 @@ public class _最多获得的短信条数_ {
             dp[i] = max;
         }
 
-        System.out.println(dp[n - 1]);
+        System.out.println(dp[n]);
     }
 
 }
