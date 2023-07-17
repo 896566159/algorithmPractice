@@ -57,6 +57,7 @@ public class _最大岛屿体积_ {
     }
 
     private static void dfs(int[][] matrix, int i, int j, int sum) {
+        // 被访问过了或者下标越界了
         if (i >= matrix.length || j >= matrix[0].length || visited[i][j]) {
             return;
         }

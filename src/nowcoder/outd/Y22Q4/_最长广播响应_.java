@@ -1,6 +1,6 @@
 package nowcoder.outd.Y22Q4;
 
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * 某通信网络中有N个网络结点，用1到N进行标识。
@@ -38,7 +38,50 @@ public class _最长广播响应_ {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        String[] split = scanner.nextLine().split(" ");
+        int m = Integer.parseInt(split[0]);
+        int n = Integer.parseInt(split[1]);
 
+        // 使用hashMap存储节点的连接关系
+        HashMap<Integer, HashSet<Integer>> map = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            int start = scanner.nextInt();
+            int end = scanner.nextInt();
+            if (!map.containsKey(start)) {
+                map.put(start, new HashSet<>());
+            }
+            if (!map.containsKey(end)) {
+                map.put(end, new HashSet<>());
+            }
+            map.get(start).add(end);
+            map.get(end).add(start);
+        }
+
+        int head = scanner.nextInt();
+        Deque<Integer> queue = new ArrayDeque<>();
+        queue.add(head);
+        // 判断是否访问过了
+        Set<Integer> visited = new HashSet<>();
+        // 最短路径数组
+        int[] d = new int[m + 1];
+        while (!queue.isEmpty()) {
+            Integer poll = queue.pollFirst();
+            for (Integer node : map.get(poll)) {
+                if (!visited.contains(node)) {
+                    visited.add(node);
+                    d[node] = d[poll] + 1;
+                    queue.add(node);
+                }
+            }
+        }
+
+        // 最远最短路径
+        int res = 0;
+        for (int i = 0; i < m + 1; i++) {
+            res = Math.max(res, d[i]);
+        }
+        System.out.println(res * 2);
     }
 
 }
