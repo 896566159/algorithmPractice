@@ -53,17 +53,29 @@ public class _生日礼物_ {
             gifts[i] = Integer.parseInt(line2[i]);
         }
 
-        int n = Integer.parseInt(scanner.nextLine());
+        int plan = Integer.parseInt(scanner.nextLine());
         Arrays.sort(cakes);
         Arrays.sort(gifts);
 
         int count = 0;
         for (int i = 0; i < gifts.length; i++) {
+            int gift = gifts[i];
             int left = 0;
             int right = cakes.length;
 
+            while (right > left) {
+                int mid = (right - left) / 2 + left;
+                if (cakes[mid] + gift > plan) {
+                    right = mid;
+                } else {
+                    left = mid + 1;
+                }
+            }
 
+            count += left;
         }
+
+        System.out.println(count);
     }
 
 }
