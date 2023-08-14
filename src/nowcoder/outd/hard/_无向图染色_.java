@@ -29,77 +29,66 @@ import java.util.*;
  */
 public class _无向图染色_ {
 
-    static int res = 0;
-    static List<Vertex> vertexSet;
+
+    static int[] colored;
+    static int res;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String[] split = scanner.nextLine().split(" ");
         int m = Integer.parseInt(split[0]);
         int n = Integer.parseInt(split[1]);
 
-        vertexSet = new ArrayList<>();
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int i = 0; i < n; i++) {
             split = scanner.nextLine().split(" ");
             int v1 = Integer.parseInt(split[0]);
-            int v2 = Integer.parseInt(split[0]);
+            int v2 = Integer.parseInt(split[1]);
 
-            Vertex vertex = new Vertex();
-            vertex.corlor = 0;
-            vertex.to = v1;
-            vertex.from = v2;
-            vertexSet.add(vertex);
+            if (!graph.containsKey(v1)) {
+                graph.put(v1, new HashSet<>());
+            }
+            if (!graph.containsKey(v2)) {
+                graph.put(v2, new HashSet<>());
+            }
+
+            // 邻接点
+            graph.get(v1).add(v2);
+            graph.get(v2).add(v1);
         }
 
-        for (int i = 0; i < vertexSet.size(); i++) {
-            dfs(0, i);
-        }
-
+        // 染色
+        colored = new int[m + 1];
+        // 节点编号[1, m],共 m 个
+        dfs(graph, 1);
         System.out.println(res);
     }
 
-    private static void dfs(int count, int index) {
-        if (count >= vertexSet.size()) {
+    private static void dfs(Map<Integer, Set<Integer>> graph, int index) {
+        if (index == colored.length) {
             res++;
             return;
         }
 
-        if (index >= vertexSet.size()) {
-            return;
-        }
+        // 未染色
+        if (colored[index] == 0) {
+            // 如果染黑色
+            colored[index] = 1;
+            dfs(graph, index + 1);
 
-        // 没有染色
-        if (vertexSet.get(index).corlor == 0) {
-            // 染黑色
-            vertexSet.get(index).corlor = 1;
-            // 染一下一个点
-            dfs(count + 1, index + 1);
-
-            // 染红色
-            boolean neighbourIsNotRed = true;
-            for (int i = 0; i < vertexSet.size(); i++) {
-                if (vertexSet.get(i).to == vertexSet.get(index).from && vertexSet.get(i).corlor == 1) {
-                    neighbourIsNotRed = false;
-                }
+            // 如果当前点染红色,则其临边一定只能染成黑色
+            colored[index] = 2;
+            for (Integer neighbour : graph.get(index)) {
+                colored[neighbour] = 1;
             }
-
-            // 染成红色
-            vertexSet.get(index).corlor = 2;
-            if (neighbourIsNotRed) {
-                dfs(count + 1, index + 1);
-            } else {
-                return;
-            }
+            dfs(graph, index + 1);
         } else {
-            // 已经染过色
-            dfs(count + 1, index + 1);
+            // 如果已经染过则直接查找下一个点
+            dfs(graph, index + 1);
         }
 
-        vertexSet.get(index).corlor = 0;
+        // 撤销染色，重新选择另一种染色
+        colored[index] = 0;
     }
 
-    static class Vertex {
-        int corlor;
-        int from;
-        int to;
-    }
+
 }
