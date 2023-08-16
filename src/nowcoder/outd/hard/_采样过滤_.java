@@ -1,8 +1,6 @@
-package nowcoder.outd.Y22Q3;
+package nowcoder.outd.hard;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 /**
