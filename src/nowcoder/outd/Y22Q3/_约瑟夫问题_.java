@@ -26,6 +26,21 @@ import java.util.*;
  * 	第一行是初始数列intput array
  * 	第二行是初始数列的长度len第三行是初始计数值m
  * 	数值出列顺序：2,3,1,4
+ *
+ * 示例：
+ * 	输入：
+ * 		3,1,2,4,5,8,7,4
+ * 		8
+ * 		1
+ * 	输出：
+ * 		3,4,4,8,5,1,2,7
+ * 示例：
+ * 	输入：
+ * 		1,2,3,4,5,6,7,8,9,10
+ * 		10
+ * 		10
+ * 	输出：
+ * 		10,1,2,4,8,5,6,3,7,9
  */
 public class _约瑟夫问题_ {
 
@@ -34,13 +49,16 @@ public class _约瑟夫问题_ {
         String[] split = scanner.nextLine().split(",");
         int n = Integer.parseInt(scanner.nextLine());
         int m = Integer.parseInt(scanner.nextLine());
+        int m2 = m;
         List<Integer> arr = new ArrayList<>();
 
         Node head = null;
         Node pre = null;
         for (int i = 0; i < n; i++) {
             Node cur = new Node();
-            cur.value = Integer.parseInt(split[i]);
+            int value = Integer.parseInt(split[i]);
+            cur.value = value;
+            arr.add(value);
 
             if (i == 0) {
                 head = cur;
@@ -56,11 +74,23 @@ public class _约瑟夫问题_ {
 
         int count = n;
         while (count > 1) {
-            int index = m % count;
+            int index = m % count - 1;
             Node p = head;
-            while (index > 2) {
-                p = p.next;
-                index--;
+            if (index == -1) {
+                // 要删除的是尾巴
+                while (p.next.next != head) {
+                    p = p.next;
+                }
+            } else if (index == 0) {
+                // 要删除的是头
+                while (p.next != head) {
+                    p = p.next;
+                }
+            } else {
+                while (index > 1) {
+                    p = p.next;
+                    index--;
+                }
             }
             // 删除
             Node next = p.next;
@@ -80,8 +110,43 @@ public class _约瑟夫问题_ {
                 System.out.print(",");
             }
         }
+
+        // 使用队列来模拟
+        System.out.println("\n使用队列来模拟结果：");
+        method(arr, m2);
     }
 
+    private static void method(List<Integer> arr, int m) {
+        List<Integer> res = new ArrayList<>();
+
+
+        while (!arr.isEmpty()) {
+            int currentIndex = m % arr.size() - 1;
+
+            if (currentIndex == -1) {
+                // 要删除的是尾巴
+                m = arr.remove(arr.size() - 1);
+            } else if (currentIndex == 0) {
+                // 要删除的是头
+                m = arr.remove(0);
+            } else {
+                List<Integer> tmp = new ArrayList<>();
+                while (currentIndex-- > 0) {
+                    tmp.add(arr.remove(0));
+                }
+                m = arr.remove(0);
+                arr.addAll(tmp);
+            }
+            res.add(m);
+        }
+
+        for (int i = 0; i < res.size(); i++) {
+            System.out.print(res.get(i));
+            if (i != res.size() - 1) {
+                System.out.print(",");
+            }
+        }
+    }
 
     static class Node {
         int value;
