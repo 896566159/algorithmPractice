@@ -28,15 +28,15 @@ public class _仿LISP运算_ {
 
 
         // 递归在这里做，每次jiexikuohao都是计算表达式中嵌套最深的一层
-//        while (remain.contains("(")) {
-//            remain = jiexikuohao(remain);
-//            System.out.println(remain);
-//        }
-//        System.out.println(remain);
+        while (remain.contains("(")) {
+            remain = jiexikuohao(remain);
+            System.out.println(remain);
+        }
+        System.out.println(remain);
 
         // 使用栈来做
-        String s = stackParse(remain);
-        System.out.println(s);
+//        String s = stackParse(remain);
+//        System.out.println(s);
 
         // 递归版本
 //            String exp = "(sub (mul 2 4) (div 9 3))";

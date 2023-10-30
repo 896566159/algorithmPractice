@@ -46,20 +46,22 @@ public class _告警抑制_ {
         int n = Integer.parseInt(scanner.nextLine());
         char[] chars = new char[n * 2];
 
+        // 记录下抑制的关系
         for (int i = 0; i < n; i++) {
             String[] split = scanner.nextLine().split(" ");
             chars[i * 2] = split[0].charAt(0);
             chars[i * 2 + 1] = split[1].charAt(0);
         }
 
+        // 所有抑制警告列表
         String[] split = scanner.nextLine().split(" ");
         Set<Character> set = new HashSet<>();
         for (String s : split) {
             set.add(s.charAt(0));
         }
 
+        // 第二个元素是被抑制的，故其不能够被报
         for (int i = 0; i < n; i++) {
-            char a = chars[i * 2];
             char b = chars[i * 2 + 1];
 
             if (set.contains(b)) {
@@ -67,6 +69,7 @@ public class _告警抑制_ {
             }
         }
 
+        // 输出能够爆出来的警告id
         for (String s : split) {
             if (set.contains(s.charAt(0))) {
                 System.out.print(s.charAt(0) + " ");

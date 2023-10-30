@@ -82,6 +82,11 @@ public class _猴子吃桃_ {
         for (int peach : peachs) {
             // 一个小时只能吃 k 个，且一个小时内只能吃一棵树上的
             sum += peach % k == 0 ? peach / k : peach / k + 1;
+
+            // 吃的速度太慢，已经超时了
+            if (sum > hours) {
+                return false;
+            }
         }
 
         return sum <= hours;

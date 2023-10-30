@@ -43,6 +43,7 @@ public class _计算数组中心位置_ {
             }
             cur *= nums[i];
         }
+
     }
 
 }

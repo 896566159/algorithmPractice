@@ -86,10 +86,18 @@ public class _VLAN资源池_ {
                     // 如果该区间只有一个 id
                     intervals.remove(i);
                 } else {
-                    // 该区间有多个 id，且删除目标 id 后区间一分为二
-                    intervals.add(i, new int[]{vlanId + 1, intervals.get(i)[1]});
-                    intervals.add(i, new int[]{intervals.get(i + 1)[0], vlanId - 1});
-                    intervals.remove(i + 2);
+                    if (intervals.get(i)[0] == vlanId) {
+                        // 删除的点是区间的左边界
+                        intervals.get(i)[0]++;
+                    } else if (intervals.get(i)[1] == vlanId) {
+                        // 删除的点是区间的右边界
+                        intervals.get(i)[1]--;
+                    } else {
+                        // 该区间有多个 id，且删除目标 id 后区间一分为二
+                        intervals.add(i, new int[]{vlanId + 1, intervals.get(i)[1]});
+                        intervals.add(i, new int[]{intervals.get(i + 1)[0], vlanId - 1});
+                        intervals.remove(i + 2);
+                    }
                 }
 
                 break;

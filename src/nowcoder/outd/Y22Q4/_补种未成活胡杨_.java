@@ -1,5 +1,7 @@
 package nowcoder.outd.Y22Q4;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -22,6 +24,7 @@ import java.util.Scanner;
  *  5
  *  2
  *  2 4
+ *  1
  * 输出:
  *  3
  * 说明: 补种到 2 或 4 结果一样，最多的连续胡杨棵树都是 3
@@ -38,52 +41,56 @@ import java.util.Scanner;
  */
 public class _补种未成活胡杨_ {
 
-    static int res;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         int m = scanner.nextInt();
-        int[] arr = new int[m];
+
+        // 初始化，有 n 棵树
+        int[] tree = new int[n];
+        // 数成活的话，标记为 0
+        Arrays.fill(tree, 0);
+        // 标记哪些树未成活
         for (int i = 0; i < m; i++) {
-            arr[i] = scanner.nextInt() - 1;
+            int index = scanner.nextInt() - 1;
+            // 树未成活，标记为 1
+            tree[index] = 1;
         }
         int k = scanner.nextInt();
 
+        // 如果未成活树全部都补种
         if (k >= m) {
             System.out.println(n);
             return;
         }
 
-        boolean[] used = new boolean[n];
-        dfs(n, arr, used, k, 0);
-        System.out.println(res);
-    }
-
-    private static void dfs(int n, int[] arr, boolean[] used, int k, int count) {
-        // 可以补种的树全部已经补种结束
-        if (count == k) {
-            int pre = 0;
-            for (int i : arr) {
-                // 没有补种，则断掉了
-                if (!used[i]) {
-                    res = Math.max(res, i - pre);
-                    pre = i;
+        // 左右指针，窗口中未成活数量等于补种数量 k
+        int left = 0;
+        int right = 0;
+        int windows = 0;
+        int max = 0;
+        // 开始处理
+        while (right < n) {
+            while (right < n && windows <= k) {
+                if (tree[right] == 1) {
+                    windows++;
                 }
+                right++;
             }
 
-            // 最后一段连续的长度
-            if (pre != n) {
-                res = Math.max(res, n - pre);
+            // [left， right - 2]这个区间内有 k + 1 颗未成活的树。故长度是：right - 2 - left + 1 = right - left - 1
+            // 特殊情况是：right已经遍历到底了，[left， right = n + 1] 区间未成活的树 <= k 颗，直接 right - left
+            int len = right == n && tree[right - 1] != 1 ? n - left : right - left - 1;
+            max = Math.max(len, max);
+            while (left < right && tree[left] == 0) {
+                left++;
             }
+            left++;
+            windows--;
         }
 
-        for (int i = 0; i < arr.length; i++) {
-            if (!used[arr[i]]) {
-                used[arr[i]] = true;
-                dfs(n, arr, used, k, count + 1);
-                used[arr[i]] = false;
-            }
-        }
+        System.out.println(max);
     }
 
 }

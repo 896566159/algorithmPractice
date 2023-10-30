@@ -54,7 +54,6 @@ public class _高效的任务规划_ {
         Scanner scanner = new Scanner(System.in);
         int n = Integer.parseInt(scanner.nextLine());
 
-
         for (int i = 0; i < n; i++) {
             // 机器数量
             int machines = Integer.parseInt(scanner.nextLine());

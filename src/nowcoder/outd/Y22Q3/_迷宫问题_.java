@@ -94,8 +94,10 @@ public class _迷宫问题_ {
 
         List<int[]> path = new ArrayList<>();
         path.add(new int[] {0, 0});
+        // 一开始出发，从左上角 [0, 0] 位置开始，尝试到达右下角
         dfs(0, 0, path);
 
+        // 如果能够成功达到右下角，则输出最短路径上的点
         if (!isBlock) {
             for (int[] item : res) {
                 System.out.println("(" + item[0] + "," + item[1] + ")");
@@ -103,11 +105,12 @@ public class _迷宫问题_ {
         }
     }
 
+    // 尝试从 [i, j] 这个位置到达终点，能达到的话是否是最短路径
     private static void dfs(int i, int j, List<int[]> path) {
-        // 达到右下角
+        // 达到右下角，判断是否是最短路径，是则更新
         if (i == matrix.length - 1 && j == matrix[0].length - 1) {
             isBlock = false;
-            // 更新答案
+            // 此次能够顺利到达右下角，并且路径上的点比较少——故更新答案
             if (res == null || res.size() > path.size()) {
                 res = new ArrayList<>(path);
             }
@@ -119,6 +122,7 @@ public class _迷宫问题_ {
             return;
         }
 
+        // 标记 [i, j] 位置已经被访问过了。如果不进行标记，那么就会再访问，那就是走了回头路，进入死循环了
         visited[i][j] = true;
         // 上下左右
         for (int[] item : direction) {
@@ -127,8 +131,10 @@ public class _迷宫问题_ {
 
             path.add(new int[] {newX, newY});
             dfs(newX, newY, path);
+            // 回溯
             path.remove(path.size() - 1);
         }
+        // 回溯
         visited[i][j] = false;
     }
 

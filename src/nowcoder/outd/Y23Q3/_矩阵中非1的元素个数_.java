@@ -4,8 +4,11 @@ import java.util.Scanner;
 
 public class _矩阵中非1的元素个数_ {
 
+    // 矩阵
     static int[][] matrix;
+    // 标记在回溯的过程中，是否被访问过
     static boolean[][] visited;
+    // 访问节点的上下左右节点时的方向
     static int[][] directions = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
     public static void main(String[] args) {
@@ -17,6 +20,7 @@ public class _矩阵中非1的元素个数_ {
         matrix = new int[m][n];
         visited = new boolean[m][n];
 
+        // 输入处理
         for (int i = 0; i < m; i++) {
             split = scanner.nextLine().split(" ");
             for (int j = 0; j < n; j++) {
@@ -24,6 +28,7 @@ public class _矩阵中非1的元素个数_ {
             }
         }
 
+        // 默认左上角的位置为 1
         matrix[0][0] = 1;
         int notOne = 0;
         dfs(0, 0);
@@ -39,7 +44,9 @@ public class _矩阵中非1的元素个数_ {
         System.out.println(notOne);
     }
 
+    // 回溯尝试感染1附近的所有0
     private static void dfs(int i, int j) {
+        // 0被感染成1
         matrix[i][j] = 1;
         // 上下左右
         for (int[] direction : directions) {

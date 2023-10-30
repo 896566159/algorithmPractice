@@ -50,31 +50,41 @@ public class _TLV解析II_ {
         Scanner scanner = new Scanner(System.in);
         String original = scanner.nextLine();
         int n = Integer.parseInt(scanner.nextLine());
-        Map<Integer, int[]> tagOffset = new TreeMap<>();
+        Set<Integer> tagOffset = new HashSet<>();
+        // 记录下要查询的目标tag
         for (int i = 0; i < n; i++) {
-            tagOffset.put(Integer.parseInt(scanner.nextLine()), new int[] {0, 0});
+            tagOffset.add(Integer.parseInt(scanner.nextLine()));
         }
 
-
+        // 开始解析
         int bound = original.length();
         int left = 0;
         int right = 2;
-        int offset = 2;
+        int offset = 4;
+        String[] res = new String[n];
+        int index = 0;
         while (right <= bound) {
             int tag = Integer.parseInt(original.substring(left, right), 16);
             int length = Integer.parseInt(original.substring(left + 2, right + 2), 16);
 
-            if (tagOffset.containsKey(tag) && (offset + length) * 2 < bound) {
-                tagOffset.put(tag, new int[] {length, offset});
+            // 如果tag是要查询的目标tag
+            if (tagOffset.contains(tag)) {
+                // 如果长度value完整
+                if (offset + (length * 2) <= bound) {
+                    res[index++] = length + " " + (offset / 2);
+                } else {
+                    res[index++] = "0 0";
+                }
             }
 
-            offset = offset + length + 2;
+            offset = offset + length * 2 + 4;
             left += (length * 2) + 4;
             right += (length * 2) + 4;
         }
 
-        for (Map.Entry<Integer, int[]> entry : tagOffset.entrySet()) {
-            System.out.println(entry.getValue()[0] + " " + entry.getValue()[1]);
+        // 输出结果
+        for (int i = 0; i < n; i++) {
+            System.out.println(res[i]);
         }
     }
 

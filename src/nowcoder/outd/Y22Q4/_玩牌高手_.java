@@ -34,17 +34,26 @@ import java.util.Scanner;
 public class _玩牌高手_ {
 
     public static void main(String[] args) {
-        //处理输入
         Scanner scanner = new Scanner(System.in);
         String[] split = scanner.nextLine().split(",");
         int n = split.length;
         int[] nums = new int[n];
-        int[] dp = new int[n + 3];
 
+        //处理输入
         for (int i = 0; i < n; i++) {
             nums[i] = Integer.parseInt(split[i]);
         }
 
+        // 初始化dp数组，长度为 n + 3
+        int[] dp = new int[n + 3];
+        dp[0] = Math.max(nums[0], 0);
+        if (n > 0) {
+            dp[1] = Math.max(dp[0] + nums[1], 0);
+        }
+        if (n > 1) {
+            dp[2] = Math.max(dp[1] + nums[2], 0);
+        }
+        // 填充 dp 数组
         for (int i = 0; i < n; i++) {
             dp[i + 3] = Math.max(dp[i], dp[i + 2] + nums[i]);
         }

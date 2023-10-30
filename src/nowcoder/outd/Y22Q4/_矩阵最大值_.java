@@ -45,19 +45,77 @@ public class _矩阵最大值_ {
         int sum = 0;
 
         for (int i = 0; i < n; i++) {
-
             String line = scanner.nextLine().replace(",", "");
-            int value = Integer.parseInt(line, 2);
-            int length = line.length();
-            // 暴力旋转字符串，计算最大值
-            for (int j = 1; j < length; j++) {
-                String reverse = line.substring(j, length) + line.substring(0, j);
-                value = Math.max(Integer.parseInt(reverse, 2), value);
-            }
-            sum += value;
-        }
+            char[] chars = line.toCharArray();
+            String doubleLine = line + line;
+            int len = chars.length;
 
+            // 统计出该行连续最长的 1 有多少个
+            int start = 0;
+            int index = -1;
+            int maxLen = 0;
+            while (start < len) {
+                // 找到 1
+                while (start < len && chars[start] == '0') {
+                    start++;
+                }
+
+                // 若这一行中有 1，需要计算到 sum 中
+                if (start < len) {
+                    // 标记下这段连续 1 的起始位置
+                    int left = start;
+                    int tmp = len;
+                    // 统计有多少个连续的 1
+                    while (tmp > 0 && chars[start % len] == '1') {
+                        tmp--;
+                        start++;
+                    }
+
+                    if (maxLen < start - left) {
+                        maxLen = start - left;
+                        index = left;
+                    } else if (maxLen != 0 && maxLen == start - left) {
+                        // 存在多段长度相等的连续 1，那么比较连续 1 后面这一段的字典序谁更大
+                        int p1 = index + maxLen;
+                        int p2 = start;
+                        while (chars[p1 % len] == chars[p2 % len]) {
+                            p1++;
+                            p2++;
+                        }
+
+                        // 说明 p1、p2 指向的字符不一样：一个是 0，一个是 1
+                        if (chars[p2 % len] == '1') {
+                            index = left;
+                        }
+                    }
+                }
+            }
+
+            // 若 index 还是等于 -1，说明该行中没有 1，怎么旋转都是 0，直接跳过不统计
+            if (index != -1) {
+                String substring = doubleLine.substring(index, index + len);
+                sum += Integer.parseInt(substring, 2);
+                System.out.println(substring);
+            }
+        }
+        System.out.println("__________________");
         System.out.println(sum);
+
+//        sum = 0;
+//        for (int i = 0; i < n; i++) {
+//
+//            String line = scanner.nextLine().replace(",", "");
+//            int value = Integer.parseInt(line, 2);
+//            int length = line.length();
+//            // 暴力旋转字符串，计算最大值
+//            for (int j = 1; j < length; j++) {
+//                String reverse = line.substring(j, length) + line.substring(0, j);
+//                value = Math.max(Integer.parseInt(reverse, 2), value);
+//            }
+//            sum += value;
+//        }
+//
+//        System.out.println(sum);
     }
 
 }

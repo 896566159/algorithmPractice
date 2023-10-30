@@ -55,12 +55,13 @@ import java.util.*;
  * 		www.huawei.com,news.qq.com
  * 		www.huawei.com,news.qq.com,www.cctv.com
  */
-public class _热点网站统_ {
+public class _热点网站统计_ {
 
+    static Map<String, Integer> map = new HashMap<>();
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Map<String, Integer> map = new HashMap<>();
 
+        // 处理输入，若是数字则代表查询 topN，是字符串说明是网址，需要统计其次数
         while (scanner.hasNext()) {
             String line = scanner.nextLine();
             try {
@@ -75,6 +76,7 @@ public class _热点网站统_ {
         }
     }
 
+    // 输出 TopN 的网址
     private static void printTopN(int n, Map<String, Integer> map) {
         // 自定义优先队列
         PriorityQueue<URLCount> urlCounts = new PriorityQueue<>((a, b)->a.count == b.count ? a.url.compareTo(b.url) : b.count - a.count);
@@ -102,6 +104,7 @@ public class _热点网站统_ {
         System.out.println();
     }
 
+    // 自定义的 URL 类，也可以使用一个长度为 2 的一维数组 a 来表示，啊a[0]-url，a[1]-count
     static class URLCount {
         String url;
         int count;

@@ -42,6 +42,7 @@ public class _最大社交距离_ {
         String[] c = seat.substring(1, seat.length() - 1).split(",");
         int[] seatOrLeave = new int[c.length];
 
+        // 处理输入
         for (int i = 0; i < c.length; i++) {
             seatOrLeave[i] = Integer.parseInt(c[i]);
         }
@@ -50,13 +51,18 @@ public class _最大社交距离_ {
         System.out.print(ans);
     }
 
+    // 根据离开或者入座的数组以及座位情况，返回最后一个人入座的号码
     public static int seatDistance(int seatNum, int[] seatOrLeave) {
         // 使用TreeSet有序集合记录被坐过的座位
         TreeSet<Integer> seatedNums = new TreeSet<>();
 
         for (int i = 0; i < seatOrLeave.length; i++) {
             int op = seatOrLeave[i];
-            if (op > 0) {
+
+            if (op < 0) {
+                // 如果是负数，则将该座位移出
+                seatedNums.remove(-op);
+            } else if (op == 1) {// 如果是 1，则表示入座
                 if (seatedNums.size() == 0) {
                     // 如果是第一个坐
                     if (i == seatOrLeave.length - 1) {
@@ -108,9 +114,6 @@ public class _最大社交距离_ {
                     // 位置坐满
                     return -1;
                 }
-            } else {
-                // 如果是负数，则将该座位移出
-                seatedNums.remove(-op);
             }
         }
 

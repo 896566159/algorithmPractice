@@ -1,5 +1,7 @@
 package nowcoder.outd.Y22Q4;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -44,6 +46,7 @@ public class _二元组个数_ {
         String[] num2 = scanner.nextLine().split(" ");
 
         int res = 0;
+        // 暴力计算
         for (int i = 0; i < n1; i++) {
             for (int j = 0; j < n2; j++) {
                 if (num1[i].equals(num2[j])) {
@@ -53,6 +56,23 @@ public class _二元组个数_ {
         }
 
         System.out.println(res);
+
+        // 使用map结构来优化
+        // 统计出第一个数组中的各元素数量
+        Map<Integer, Integer> map = new HashMap<>();
+        int count = 0;
+        for (int i = 0; i < n1; i++) {
+            int key = Integer.parseInt(num1[i]);
+            map.put(key, map.getOrDefault(key, 0) + 1);
+        }
+
+        for (int i = 0; i < n2; i++) {
+            int key = Integer.parseInt(num2[i]);
+            if (map.containsKey(key)) {
+                count += map.get(key);
+            }
+        }
+        System.out.println(count);
     }
 
 }

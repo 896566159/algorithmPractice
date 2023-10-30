@@ -37,6 +37,7 @@ public class _AI识别面板_ {
         int n = Integer.parseInt(scanner.nextLine());
         int[][] lanterns = new int[n][4];
 
+        // 根据灯泡的左上角和右下角的左边，计算出其中心坐标和半径
         for (int i = 0; i < n; i++) {
             String[] split = scanner.nextLine().split(" ");
             lanterns[i][0] = Integer.parseInt(split[0]);
@@ -48,9 +49,8 @@ public class _AI识别面板_ {
             lanterns[i][3] = (Integer.parseInt(split[3]) - Integer.parseInt(split[1])) / 2;
         }
 
-        // 纵坐标排序
-        Arrays.sort(lanterns, (a, b)->a[2] - b[2]);
-
+        // 先按照，纵坐标排序(即题目中的高度，高度值越小代表越高)，众坐标相等，则按照横坐标排序
+        Arrays.sort(lanterns, (a, b)->a[2] != b[2] ? a[2] - b[2] : a[1] - b[1]);
         List<int[]> sameRowLanterns = new ArrayList<>();
         int[] base = lanterns[0];
         sameRowLanterns.add(base);
@@ -62,21 +62,14 @@ public class _AI识别面板_ {
             if (lanterns[i][2] - base[2] <= base[3]) {
                 sameRowLanterns.add(lanterns[i]);
             } else {
-                // 横坐标排序
-                Collections.sort(sameRowLanterns, (a, b)->a[1] - b[1]);
-                for (int[] lantern : sameRowLanterns) {
-                    sb.append(lantern[0] + " ");
-                }
-
-                sameRowLanterns.clear();
+                // 从未排序的灯中挑选出最高的那颗
                 base = lanterns[i];
                 sameRowLanterns.add(base);
             }
         }
 
+        // 输出结果
         if (!sameRowLanterns.isEmpty()) {
-            // 横坐标排序
-            Collections.sort(sameRowLanterns, (a, b)->a[1] - b[1]);
             for (int[] lantern : sameRowLanterns) {
                 sb.append(lantern[0] + " ");
             }

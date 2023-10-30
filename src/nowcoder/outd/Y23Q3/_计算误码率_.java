@@ -47,10 +47,11 @@ public class _计算误码率_ {
         Scanner scanner = new Scanner(System.in);
         char[] original = scanner.nextLine().toCharArray();
         char[] trans = scanner.nextLine().toCharArray();
-        // 还原自由字母的字符串
+        // 还原被压缩字符串
         char[] oldChar = original2char(original);
         char[] newChar = original2char(trans);
 
+        // 开始计算误码率，双指针逐一比较两个字符串的字母，统计不相同的字符
         int index1 = 0;
         int index2 = 0;
         int count = 0;
@@ -71,6 +72,7 @@ public class _计算误码率_ {
         System.out.println(count + "/" + oldChar.length);
     }
 
+    // 将含有数字的压缩字符展开还原成没有数字的字符串
     private static char[] original2char(char[] original) {
         // 恢复原始字符串
         StringBuilder sb = new StringBuilder();

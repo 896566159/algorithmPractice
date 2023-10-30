@@ -1,9 +1,6 @@
 package nowcoder.outd.Y22Q3;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * 某商城举办了一个促销活动，
@@ -49,6 +46,7 @@ public class _免单统计_ {
         Scanner scanner = new Scanner(System.in);
         Map<String, String> map = new HashMap<>();
         int count = 0;
+        List<String> input = new ArrayList<>();
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -56,6 +54,15 @@ public class _免单统计_ {
                 break;
             }
 
+            // 记录下每个下单时间
+            input.add(line);
+        }
+
+        // 排序，保证第一次读到某个秒时，它是最靠前的那一秒
+        Collections.sort(input);
+        int n = input.size();
+        for (int i = 0; i < n; i++) {
+            String line = input.get(i);
             // 截取出秒钟
             String s1 = line.substring(0, line.length() - 4);
 

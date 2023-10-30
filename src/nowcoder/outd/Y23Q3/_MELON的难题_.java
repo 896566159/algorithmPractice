@@ -77,14 +77,15 @@ public class _MELON的难题_ {
         }
     }
 
+    // 目标是拿出 total 块石头筹齐目标重量 target。    目前已经拿了 count 块石头，总量是 sum，具体是拿了哪些石头记录在 used 中
     private static boolean dfs(int[] stones, int count, int total, int sum, int target, boolean[] used) {
         // 已经使用的石头数量超出限度
         if (count > total) {
             return false;
         }
 
-        // 凑足了目标重量
-        if (sum == target) {
+        // 用了 total 块石头， 凑足了目标重量 target
+        if (sum == target && count == total) {
             return true;
         }
 

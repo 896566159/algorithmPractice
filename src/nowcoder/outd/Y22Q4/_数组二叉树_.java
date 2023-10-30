@@ -74,7 +74,9 @@ public class _数组二叉树_ {
         }
 
         // 左子树
-        dfs(2 * i, new ArrayList<>(path));
+        if (2 * i < nodes.length) {
+            dfs(2 * i, new ArrayList<>(path));
+        }
 
         // 右子树
         if (2 * i + 1 < nodes.length) {

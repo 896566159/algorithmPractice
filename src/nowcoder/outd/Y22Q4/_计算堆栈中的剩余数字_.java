@@ -4,9 +4,57 @@ import java.util.*;
 
 public class _计算堆栈中的剩余数字_ {
 
+    // 自己写的模拟过程
+    public static void main(String[] args) {
+        // 处理输入
+        Scanner in = new Scanner(System.in);
+        String line = in.nextLine();
+
+        //解析为int数组
+        String[] nums_str_list = line.split(" ");
+        int[] nums = new int[nums_str_list.length];
+        for (int i = 0; i < nums_str_list.length; i++) {
+            nums[i] = Integer.parseInt(nums_str_list[i]);
+        }
+
+        int index = 0;
+        int[] res = new int[nums_str_list.length];
+        // 第一个元素先入栈
+        res[index++] = nums[0];
+        int tmp = 0;
+        int sum = 0;
+        // 模拟入栈过程
+        for (int i = 1; i < nums.length; i++) {
+            // 检查 连续的栈顶之和 与 num[i] 的大小关系
+            tmp = index - 1;
+            sum = nums[i];
+            while (tmp >= 0 && sum > 0) {
+                sum -= res[tmp--];
+            }
+
+            // 连续好几个数加起来和当前将要入栈的数相等
+            if (sum == 0) {
+                // 弹出这些数，即将数组下标移动到 tmp + 1 的地方，后面的数据是失效的弹出数据
+                index = tmp + 1;
+                // 将当前元素乘以 2，并且 延迟入栈，因为新的元素值可能有可以和前面的元素之和抵消掉
+                nums[i] = nums[i] * 2;
+                i--;
+            } else {
+                // 栈顶的几个数之和不等于当前数，立即入栈
+                res[index++] = nums[i];
+            }
+        }
+
+        // 直接从 index - 1 出开始输出即可
+        while (index-- > 0) {
+            System.out.print(res[index] + " ");
+        }
+    }
+
+
     public static Stack<Integer> num_stack = new Stack<>();
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         // 处理输入
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();

@@ -45,8 +45,10 @@ public class _拼接URL_ {
         String suffix = line.substring(index + 1, line.length());
 
         if (prefix.length() == 0 && suffix.length() == 0) {
+            // 只有一个根目录
             System.out.println("/");
         } else if (prefix.length() != 0 && suffix.length() == 0) {
+            // 只有前缀，没有后缀
             if (prefix.charAt(0) != '/') {
                 prefix = "/" + prefix;
             }
@@ -55,6 +57,7 @@ public class _拼接URL_ {
             }
             System.out.println(prefix);
         } else if (prefix.length() == 0 && suffix.length() != 0) {
+            // 没有前缀，只有后缀
             if (suffix.charAt(0) != '/') {
                 suffix = "/" + suffix;
             }
@@ -63,6 +66,7 @@ public class _拼接URL_ {
             }
             System.out.println(suffix);
         } else {
+            // 前缀、后缀都有
             if (prefix.charAt(0) != '/') {
                 prefix = "/" + prefix;
             }
@@ -77,8 +81,6 @@ public class _拼接URL_ {
             }
             System.out.println(prefix + suffix);
         }
-
-
     }
 
 }

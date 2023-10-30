@@ -1,4 +1,4 @@
-package nowcoder.outd.Y22Q4;
+package nowcoder.outd.hard;
 
 import java.util.Arrays;
 import java.util.Scanner;

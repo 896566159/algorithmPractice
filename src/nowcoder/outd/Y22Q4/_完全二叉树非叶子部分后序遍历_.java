@@ -31,12 +31,15 @@ public class _完全二叉树非叶子部分后序遍历_ {
     static String[] tree;
     static List<String> notLeaf = new ArrayList<>();
     static int nodes;
-
     public static void main(String[] args) {
         //处理输入
         Scanner scanner = new Scanner(System.in);
         tree = scanner.nextLine().split(" ");
         nodes = tree.length;
+        // 题目规定：只有一个节点的树，此节点认定为根节点（非叶子）。
+        if (tree.length == 1) {
+            System.out.println(1);
+        }
 
         dfs(0);
         int size = notLeaf.size();

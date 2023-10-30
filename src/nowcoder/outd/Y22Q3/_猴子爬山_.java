@@ -45,7 +45,6 @@ public class _猴子爬山_ {
             third = sum;
         }
 
-        System.out.println("我的做法");
         System.out.println(sum);
     }
 }

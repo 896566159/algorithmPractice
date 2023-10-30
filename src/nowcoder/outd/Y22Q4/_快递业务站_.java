@@ -47,10 +47,12 @@ import java.util.*;
  */
 public class _快递业务站_ {
 
+    // 并查集代表元数组
     static int[] parent;
+    // 代表元数组所属的类别/集群中的节点数量
     static int[] size;
+    // 又多少个相互独立的类别/集群
     static int countIslans;
-    static int dfsCount;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -58,6 +60,7 @@ public class _快递业务站_ {
         int[][] nums = new int[n][n];
         List<Integer>[] edges = new List[n];
 
+        // 输入处理
         for (int i = 0; i < n; i++) {
             String[] split = scanner.nextLine().split(" ");
             List<Integer> list = new ArrayList<>();
@@ -72,12 +75,15 @@ public class _快递业务站_ {
             edges[i] = list;
         }
 
-        // 初始化并查集
+        // 初始化并查集，n个节点，节点编号[0, n -1]
         parent = new int[n];
         size = new int[n];
         countIslans = n;
         // 初始化并查集代表元、节点的数量
-        initUnion();
+        for (int i = 0; i < countIslans; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
 
         // 遍历所有元素
         for (int i = 0; i < n; i++) {
@@ -102,6 +108,7 @@ public class _快递业务站_ {
         System.out.println("图 dfs 解法:" + cnt);
     }
 
+    // 合并两个类别/集群
     private static void union(int i, int j) {
         int rootI = find(i);
         int rootJ = find(j);
@@ -121,15 +128,9 @@ public class _快递业务站_ {
         }
     }
 
+    // 找出某点的所属类别/集群的代表元
     private static int find(int i) {
         return i == parent[i] ? i : (parent[i] = find(parent[i]));
-    }
-
-    private static void initUnion() {
-        for (int i = 0; i < countIslans; i++) {
-            parent[i] = i;
-            size[i] = 1;
-        }
     }
 
     // 图解法

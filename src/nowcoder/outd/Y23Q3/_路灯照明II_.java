@@ -40,10 +40,13 @@ public class _路灯照明II_ {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = Integer.parseInt(scanner.nextLine());
+        // 直接将输入转换成数组
         int[] array = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         int count = 0;
 
+        // 统计两两灯泡之间没有被照明到的区间距离总和
         for (int i = 1; i < n; i++) {
+            // 如果两灯泡的照明半径之和 < 两灯安装距离，则存在无法照明的区间 = 100 - 两灯的半径之和
             if (array[i] + array[i - 1] < 100) {
                 count += 100 - array[i] - array[i - 1];
             }

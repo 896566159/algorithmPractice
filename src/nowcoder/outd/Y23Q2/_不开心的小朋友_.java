@@ -39,7 +39,7 @@ import java.util.*;
  * 示例3：
  * 	输入:
  * 		3
- * 		1 2 3 4 5 6 7 3 8 2 1 6 8 7 5
+ * 		1 2 3 4 5 6 7 3 8 2 1 6 8 7 5 4
  * 	输出:
  * 		1
  * 说明:
@@ -51,15 +51,17 @@ public class _不开心的小朋友_ {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int cars = Integer.parseInt(scanner.nextLine());
-        int[] seats = new int[cars + 1];
         
         String[] split = scanner.nextLine().split(" ");
         int n = split.length;
-        Queue<Integer> queue = new ArrayDeque<>();
+        // 记录小朋友是否出现过，即用于判断小朋友是要等车还是离开
         Set<Integer> history = new HashSet<>();
-        Set<Integer> hold = new HashSet<>();
+        // 记录等待的小朋友
+        Set<Integer> waitId = new HashSet<>();
+        // 记录等待的小朋友是第几个等待者，因为坐车是按照先来先坐的次序
         List<int[]> wait = new ArrayList<>();
         int res = 0;
+        // 记录等待的小朋友是第几个等待者
         int waitIndex = 0;
 
         for (int i = 0; i < n; i++) {
@@ -68,11 +70,11 @@ public class _不开心的小朋友_ {
             // 小朋友之前出现过——出现过代表小朋友离开
             if (history.contains(curChild)) {
                 // 判断小朋友有没有做过车
-                if (hold.contains(curChild)) {
+                if (waitId.contains(curChild)) {
                     // 小朋友在等待队列中
                     res++;
                     // 把小朋友从等待队列中删除
-                    hold.remove(curChild);
+                    waitId.remove(curChild);
                     int removeIndex = 0;
                     for (int j = 0; j < wait.size(); j++) {
                         if (wait.get(j)[1] == curChild) {
@@ -84,10 +86,10 @@ public class _不开心的小朋友_ {
                 } else {
                     // 小朋友坐过车
                     // 如果还有小朋友，则让下一位小朋友过来坐车
-                    if (hold.size() > 0) {
+                    if (waitId.size() > 0) {
                         Collections.sort(wait, (a, b)->a[1] - b[1]);
                         int[] first = wait.remove(0);
-                        hold.remove(first[1]);
+                        waitId.remove(first[1]);
                     } else {
                         cars++;
                     }
@@ -100,7 +102,7 @@ public class _不开心的小朋友_ {
                     cars--;
                 } else {
                     // 进入队列等待
-                    hold.add(curChild);
+                    waitId.add(curChild);
                     wait.add(new int[] {waitIndex++, curChild});
                 }
             }

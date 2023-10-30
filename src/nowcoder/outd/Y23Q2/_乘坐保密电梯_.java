@@ -33,7 +33,9 @@ import java.util.Scanner;
  */
 public class _乘坐保密电梯_ {
 
+    // 记录下 <= 目标楼层并且是最高的那个楼层
     static int min = Integer.MAX_VALUE;
+    // 结果
     static ArrayList<Integer> res;
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -43,6 +45,7 @@ public class _乘坐保密电梯_ {
         Integer[] nums = new Integer[n];
         split = scanner.nextLine().split(" ");
 
+        // 输入处理
         for (int i = 0; i < n; i++) {
             nums[i] = Integer.parseInt(split[i]);
         }
@@ -64,8 +67,19 @@ public class _乘坐保密电梯_ {
         }
     }
 
+    /**
+     * @param nums 数组序列
+     * @param diction 记录本次上还是下
+     * @param level 目前所在楼层
+     * @param i 第几次楼层移动
+     * @param target 目标楼层
+     * @param path 在楼层上下过程中的记录
+     * @param used 记录哪些移动楼层数字已经被使用
+     */
     private static void dfs(Integer[] nums, int diction, int level, int i, int target, ArrayList<Integer> path, boolean[] used) {
+        // 如果使用完所有数字
         if (i == nums.length) {
+            // 能够达到楼层或者小于该楼层最近的序列，那就是找出小于等于目标楼层最高的那一层
             if (target - level >= 0 && target - level < min) {
                 min = target - level;
                 res = new ArrayList<Integer>(path);
@@ -73,21 +87,22 @@ public class _乘坐保密电梯_ {
             return;
         }
 
-
+        // 遍历序列，下一步的可选项一一枚举尝试
         for (int j = 0; j < nums.length; j++) {
             if (!used[j]) {
                 used[j] = true;
                 path.add(nums[j]);
+                // 根据方向来决定是上还是下
                 if (diction == 1) {
                     dfs(nums, 0, level + nums[j], i + 1, target, path, used);
                 } else {
                     dfs(nums, 1, level - nums[j], i + 1, target, path, used);
                 }
+                // 回溯
                 path.remove(path.size() - 1);
                 used[j] = false;
             }
         }
-
     }
 
 }

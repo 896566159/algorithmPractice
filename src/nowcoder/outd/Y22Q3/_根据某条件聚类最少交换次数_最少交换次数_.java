@@ -22,7 +22,7 @@ import java.util.Scanner;
  *  2、使用滑动窗口，以 小于k 的总数为窗口大小
  *  3、计算窗口内 大于k 的个数，最少的即为需要交换的次数
  */
-public class _最少交换次数_ {
+public class _根据某条件聚类最少交换次数_最少交换次数_ {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -37,27 +37,34 @@ public class _最少交换次数_ {
             }
         }
 
+        // 没有小于k的元素，或者全都是小于k的元素。不需要移动
+        if (count < 0 || count == array.length) {
+            System.out.println(0);
+            return;
+        }
+
         // 开一个长度为 count 的窗口，该窗口中小于 k 的数量最多时，交换次数最少
         int left = 0;
         int right = 0;
+        // 记录窗口中有多少个小于 k 的元素
         int windows = 0;
-        while (right < array.length && right < count) {
-            if (array[right] < k) {
+        // 初始化窗口：左边界 left-0，右边界 right-count
+        while (right < count) {
+            if (array[right++] < k) {
                 windows++;
             }
-            right++;
         }
 
+        // 记录窗口中最多有多少个 小于 k 的元素
         int max = windows;
         while (right < array.length) {
-            if (array[left] < k) {
+            if (array[left++] < k) {
                 windows--;
             }
-            if (array[right] < k) {
+            if (array[right++] < k) {
                 windows++;
             }
-            right++;
-            left++;
+            // 更新窗口中小于 k 的元素数量
             max = Math.max(max, windows);
         }
 

@@ -51,6 +51,12 @@ public class _考古学家_ {
         }
     }
 
+    /**
+     *
+     * @param used
+     * @param index
+     * @param path
+     */
     private static void dfs(boolean[] used, int index, String path) {
         // 递归边界
         if (index == words.length) {

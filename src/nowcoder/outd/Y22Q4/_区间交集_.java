@@ -65,7 +65,6 @@ public class _区间交集_ {
         s = s.replace("]", "");
         s = s.replace(" ", "");
         String[] split = s.split(",");
-//        String[] split = s.split(" ");
         int n = split.length;
         int[] points = new int[n];
 

@@ -39,13 +39,12 @@ public class _求解连续数列_ {
 
         int left = 0;
         int right = 0;
+        int mid = sum / n;
         if (n % 2 == 0) {
             // 如果 n 是偶数，则 mid 是靠近左边的那个中间数
-            int mid = sum / n;
             left = mid - (n/ 2) + 1;
             right = mid + (n / 2);
         } else {
-            int mid = sum / n;
             left = mid - (n / 2);
             right = mid + (n / 2);
         }

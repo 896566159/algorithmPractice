@@ -27,57 +27,64 @@ import java.util.Scanner;
  * 		3[m2[c]]
  * 	输出:
  * 		mccmccmcc
- * 说明：m2[c] 解压缩后为 mcc，重复三次为 mccmccmcc
+ * 说明：m2[c] 解压缩后为 mcc，重复三次为 mccmccmcc  3[g[v][ab]]zx
  */
 public class _报文解压缩_ {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String originStr = sc.nextLine();
-        String res = parse(originStr);
-        System.out.println(res);
+        while (originStr.contains("[")) {
+            originStr = parse(originStr);
+        }
+        System.out.println(originStr);
     }
 
+    // 还原原始报文：每次都找到最深的括号解析出括号中的内容
+    // 最深的括号特点：
+    // 其左括号是最右边那个
+    // 其右括号的最左边那个
     private static String parse(String originStr) {
-        int n = originStr.length();
         StringBuilder res = new StringBuilder();
-
-        // 如果字符串外层就是一个 []，直接返回括号中的内容
-        if (originStr.charAt(0) == '[' && originStr.charAt(0) == ']') {
-            return parse(originStr.substring(1, originStr.length() - 1));
+        char[] chars = originStr.toCharArray();
+        int n = chars.length;
+        // 找到最右边的左括号
+        int left = n - 1;
+        while (left >= 0 && chars[left] != '[') {
+            left--;
         }
 
-        for (int i = 0; i < n; i++) {
-            // 遇见数字，就代表遇见了 n[str]，因为题目说的——原始报文不包含数字，所有的数字只表示重复的次数 n ，例如不会出现像 5b 或 3[8] 的输入；
-            char c = originStr.charAt(i);
-            if (c < '9' && c > '0') {
-                // 先解析数字
-                int j = i;
-                while (originStr.charAt(j) > '0' && originStr.charAt(j) < '9'  && j < n) {
-                    j++;
-                }
-                int num = Integer.parseInt(originStr.substring(i, j));
-                int k = j;
+        // 找到最左边的右括号
+        int right = left + 1;
+        while (right < n && chars[right] != ']') {
+            right++;
+        }
 
-                // 找到成对的 []
-                while (originStr.charAt(k) != ']'  && k < n) {
-                    k++;
-                }
-                String parseStr = parse(originStr.substring(j + 1, k + 1 == n ? k : k + 1));
-                // 拼接
-                while (num-- > 0) {
-                    res.append(parseStr);
-                }
-                // 更新 i
-                i = k;
-            } else {
-                if (c != ']') {
-                    res.append(c);
-                }
+        // 括号[]的左右边界已经明确，判断是否是被压缩的字符串：n[str]
+        if (left - 1 >= 0 && chars[left - 1] >= '0' && chars[left - 1] <= '9') {
+            int tmp = left - 1;
+            while (tmp >= 0 && chars[tmp] >= '0' && chars[tmp] <= '9') {
+                tmp--;
             }
+            int num = Integer.parseInt(originStr.substring(tmp + 1, left));
+
+            // 拼接括号之前的字符串
+            res.append(originStr.substring(0, tmp + 1));
+            // 拼接括号中的解压字符串
+            while (num-- > 0) {
+                res.append(originStr.substring(left + 1, right));
+            }
+            // 拼接括号之前的字符串
+            res.append(originStr.substring(right + 1, originStr.length()));
+        } else {
+            // 括号外没有数字，只是单纯的 [str]，直接去掉括号
+            res.append(originStr.substring(0, left));
+            res.append(originStr.substring(left + 1, right));
+            res.append(originStr.substring(right + 1, originStr.length()));
         }
 
         return res.toString();
     }
+
 
 }

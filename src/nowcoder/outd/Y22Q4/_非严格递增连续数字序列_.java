@@ -60,7 +60,6 @@ public class _非严格递增连续数字序列_ {
                             maxLeft = preDes;
                             maxRgiht = tmp;
                         }
-
                         j= tmp;
                     }
                     j++;

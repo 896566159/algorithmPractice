@@ -32,11 +32,12 @@ public class _二维伞的雨滴效应_ {
         int n = split.length;
         int[] nums = new int[n];
 
+        // 输入处理
         for (int i = 0; i < n; i++) {
             nums[i] = Integer.parseInt(split[i]);
         }
 
-        // 一个节点
+        // 只有一个节点，根节点
         if (nums.length == 1) {
             System.out.println(1 + " " + nums[0] + " " + nums[0]);
             return;
@@ -44,22 +45,25 @@ public class _二维伞的雨滴效应_ {
 
         root = new Node();
         root.value = nums[0];
-        // 一个节点
+        // 判断数组是否能够构造出二叉搜索树
         if (!isBinarySearchTree(nums, root, 0, nums.length - 1)) {
             System.out.println("0 0 0");
             return;
         }
 
+        // 能够造成二叉搜索树，则需要找出其左右子树的伞坠——两边最边上的一个分支的叶节点
         StringBuilder res = new StringBuilder("1");
-        // 找到树的最左边的一个节点
+        // 找到树的最左边的分支的叶节点
         Node tmp = root;
         if (root.left != null) {
             tmp = root.left;
+            // 找出最左边的分支的叶节点
             while (tmp.left != null || tmp.right != null) {
                 tmp = tmp.left == null ? tmp.right : tmp.left;
             }
             res.append(" ").append(tmp.value);
         } else {
+            // 不存在左子树，则伞坠是 0
             res.append(" ").append(0);
         }
 
@@ -67,22 +71,34 @@ public class _二维伞的雨滴效应_ {
         tmp = root;
         if (root.right != null) {
             tmp = root.right;
+            // 找出最右边的分支的叶节点
             while (tmp.left != null || tmp.right != null) {
                 tmp = tmp.right == null ? tmp.left : tmp.right;
             }
             res.append(" ").append(tmp.value);
         } else {
+            // 不存在右子树，则伞坠是 0
             res.append(" ").append(0);
         }
 
         System.out.println(res.toString());
     }
 
+    /**
+     * 判断是否可以组成二叉搜索树树，同时记录下形成的树状情况
+     * @param nums 构造树的数组
+     * @param root 根节点
+     * @param start 构造树的数组左边界
+     * @param end 构造树的数组右边界
+     * @return 是否能够构成树
+     */
     private static boolean isBinarySearchTree(int[] nums, Node root, int start, int end) {
+        // 如果所有元素都用来构造树了，说明构造成功
         if (end - start < 1) {
             return true;
         }
 
+        // 左子树的根节点是 [start+1, end]区间中，并且它是第一个比根节点值小的数
         int leftIndex = start + 1;
         // 找出左子树
         while (leftIndex <= end && nums[leftIndex] < nums[start]) {
@@ -98,7 +114,7 @@ public class _二维伞的雨滴效应_ {
             rightIndex++;
         }
 
-        // 构造左子树
+        // 构造左子树，[start+1, leftIndex - 1]区间都是左子树，并且左子树根节点是root节点右边第一个数
         if (leftIndex > start + 1) {
             root.left = new Node();
             root.left.value = nums[start + 1];
@@ -119,6 +135,7 @@ public class _二维伞的雨滴效应_ {
         return true;
     }
 
+    // 树中节点类
     static class Node {
         Node left;
         Node right;
